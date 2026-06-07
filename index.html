@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アプリ起動パネル</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fb;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+        }
+        .block {
+            border: 1px solid #e0e4ec;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fafbfc;
+        }
+        .block:last-child {
+            margin-bottom: 0;
+        }
+        h3 {
+            margin-top: 0;
+            color: #4a5568;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 8px;
+        }
+        .cmd-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2d3748;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .btn {
+            background-color: #4299e1;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background-color: #3182ce;
+        }
+        .btn-large {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            text-align: center;
+            background-color: #48bb78;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+        .btn-large:hover {
+            background-color: #38a169;
+        }
+        .btn-discord {
+            background-color: #5865F2;
+        }
+        .btn-discord:hover {
+            background-color: #4752C4;
+        }
+        .error-message {
+            color: #e53e3e;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 40px 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="windows-content" class="hidden">
+        <div class="block">
+            <h3>実行するコマンド</h3>
+            
+            <div class="cmd-item">
+                <span>1. cmd</span>
+                <button class="btn" onclick="copyText('cmd')">コピー</button>
+            </div>
+            
+            <div class="cmd-item">
+                <span>2. cd C:\Users\○○\Downloads\discord_bot\code</span>
+                <button class="btn" onclick="copyText('cd C:\\Users\\○○\\Downloads\\discord_bot\\code')">コピー</button>
+            </div>
+            
+            <div class="cmd-item">
+                <span>3. python admin_panel.py</span>
+                <button class="btn" onclick="copyText('python admin_panel.py')">コピー</button>
+            </div>
+        </div>
+
+        <div class="block">
+            <h3>コマンドプロンプト</h3>
+            <a href="cmd://" class="btn btn-large">コマンドプロンプトを起動</a>
+        </div>
+
+        <div class="block">
+            <h3>Discord</h3>
+            <a href="discord://" class="btn btn-large btn-discord">Discordを起動</a>
+        </div>
+    </div>
+
+    <div id="other-content" class="hidden">
+        <div class="error-message">
+            Windowsでアクセスしてください。
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // ユーザーのエージェント情報からWindowsであるか判定
+        const isWindows = navigator.userAgent.toLowerCase().includes("windows");
+
+        if (isWindows) {
+            document.getElementById("windows-content").classList.remove("hidden");
+        } else {
+            document.getElementById("other-content").classList.remove("hidden");
+        }
+    });
+
+    // クリップボードへのコピー関数
+    function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("コピーしました: " + text);
+        }).catch(err => {
+            console.error("コピーに失敗しました: ", err);
+        });
+    }
+</script>
+
+</body>
+</html>
